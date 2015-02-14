@@ -4,5 +4,5 @@
 
 var Tile = function(image) {
   this.back = image;
-  this.front = '/images/front.png';
+  this.front = 'images/front.png';
 };
