@@ -1,4 +1,3 @@
-/* global _ */
 /* exported Tile */
 
 'use strict';

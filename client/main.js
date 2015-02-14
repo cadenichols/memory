@@ -19,11 +19,11 @@ function init() {
   createTiles();
   drawTiles();
   $('#start').on('click', startTimer);
-  $(document).on('click', '.flipper', flipIt);
+  $(document).on('click', '.flipper', clickTile);
 
 }
 
-function flipIt() {
+function clickTile() {
   if ($('#timer').text() === '0') { alert('Click Start Timer to begin!');}
 
   if ($('#timer').text() > 0 && !$(this).hasClass('picked')) {
@@ -48,9 +48,7 @@ function flipIt() {
         $picked = [];
       }, 400);
     }
-
   }
-
 }
 
 function checkWin() {
@@ -73,6 +71,21 @@ function startTimer() {
       }
     }, 1000);
   }
+}
+
+function createTiles() {
+  var images = [];
+  for (var i = 1; i < 25; i++) {
+    images.push('/images/' + i + '.png');
+  }
+  images = _.shuffle(images);
+
+  for (var j = 0; j < NUMTILES / 2; j++) {
+    var tile = new Tile(images.pop());
+    tiles.push(tile);
+    tiles.push(tile);
+  }
+  tiles = _.shuffle(tiles);
 }
 
 function drawTiles() {
@@ -117,19 +130,4 @@ function drawTiles() {
 
     }
   }
-}
-
-function createTiles() {
-  var images = [];
-  for (var i = 1; i < 25; i++) {
-    images.push('/images/' + i + '.png');
-  }
-  images = _.shuffle(images);
-
-  for (var j = 0; j < NUMTILES / 2; j++) {
-    var tile = new Tile(images.pop());
-    tiles.push(tile);
-    tiles.push(tile);
-  }
-  tiles = _.shuffle(tiles);
 }
