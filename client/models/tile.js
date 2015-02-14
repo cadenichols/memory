@@ -4,6 +4,6 @@
 'use strict';
 
 var Tile = function(image) {
-  this.image = image;
-  this.back = '/images/back.png';
+  this.back = image;
+  this.front = '/images/back.png';
 };

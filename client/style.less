@@ -9,9 +9,14 @@ body {
   border: 1px solid white;
 }
 
-#title {
+#timer {
+  margin:0 25px;
+  font-size:20px;
+}
+
+.title {
   text-align: center;
-  h1 {
+  h1, span {
     color: white;
   }
 }
@@ -26,12 +31,13 @@ body {
 .flip-container {
   perspective: 1000;
 }
-  /* flip the pane when hovered */
+  /* flip the pane when hovered 
   .flip-container:hover .flipper, .flip-container.hover .flipper {
     transform: rotateY(180deg);
-  }
+  }*/
 
 .flip-container, .front, .back {
+  display: inline-block;
   width: 155px;
   height: 155px;
 }
