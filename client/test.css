@@ -1,35 +1,3 @@
-body {
-  background-color: #222222;
-}
-
-.square {
-  display: inline-block;
-  height: 155px;
-  width: 155px;
-  border: 1px solid white;
-}
-
-#timer {
-  margin:0 25px;
-  font-size:20px;
-}
-
-.title {
-  text-align: center;
-  h1, span {
-    color: white;
-  }
-}
-
-#gamecontainer {
-  padding-top: 20px;
-  text-align: center;
-}
-
-.flip-container.flip .flipper {
-  transform: rotateY(180deg);
-}
-/*********************************/
 
 
 /* entire container, keeps perspective */
@@ -75,6 +43,3 @@ body {
 .back {
   transform: rotateY(180deg);
 }
-/*********************************/
-
-

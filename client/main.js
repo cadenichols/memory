@@ -4,36 +4,75 @@
 
 $(document).ready(init);
 
+var TIMER = 60;
 var NUMROWS = 4;
 var NUMCOLS = 5;
 var NUMTILES = NUMROWS * NUMCOLS;
 
 var tiles = [];
+var $picked = [];
+var flipped = [];
+
 var counter;
 
 function init() {
   createTiles();
   drawTiles();
   $('#start').on('click', startTimer);
-  $('.square').on('click', flipIt);
+  $(document).on('click', '.flipper', flipIt);
 
 }
 
 function flipIt() {
-  console.log('test');
+  if ($('#timer').text() === '0') { alert('Click Start Timer to begin!');}
+
+  if ($('#timer').text() > 0 && !$(this).hasClass('picked')) {
+
+    var $clicked = $(this);
+    document.querySelector('#' + $clicked.parent().attr('id')).classList.toggle('flip');
+    $clicked.addClass('picked');
+    $picked.push($clicked);
+    if ($picked.length === 2) {
+
+      setTimeout(function() {
+
+        if ($picked[0].find('.imgBack').attr('src') === $picked[1].find('.imgBack').attr('src')) {
+          flipped.push($picked[0], $picked[1]);
+          checkWin();
+        } else {
+          $picked[0].removeClass('picked');
+          $picked[1].removeClass('picked');
+          document.querySelector('#' + $picked[0].parent().attr('id')).classList.toggle('flip');
+          document.querySelector('#' + $picked[1].parent().attr('id')).classList.toggle('flip');
+        }
+        $picked = [];
+      }, 400);
+    }
+
+  }
+
+}
+
+function checkWin() {
+  if (flipped.length === NUMTILES) {
+    alert('You WIN!');
+  }
 }
 
 function startTimer() {
-  counter = 60;
-  setInterval(function() {
-    counter--;
-    if (counter >= 0) {
-      $('#timer').text(counter);
-    }
-    if (counter === 0) {
-      alert('You LOSE!');
-    }
-  }, 1000);
+  if ($('#timer').text() === '0') {
+    counter = TIMER;
+    $('#timer').text(counter);
+    setInterval(function() {
+      counter--;
+      if (counter >= 0) {
+        $('#timer').text(counter);
+      }
+      if (counter === 0) {
+        alert('You LOSE!');
+      }
+    }, 1000);
+  }
 }
 
 function drawTiles() {
@@ -71,8 +110,8 @@ function drawTiles() {
       var $imgBack = $('<img>');
       $imgFront.attr('src', tile.front);
       $imgBack.attr('src', tile.back);
-      $imgFront.addClass('image front');
-      $imgBack.addClass('image back');
+      $imgFront.addClass('image imgFront');
+      $imgBack.addClass('image imgBack');
       $('#front' + x + y).append($imgFront);
       $('#back' + x + y).append($imgBack);
 
