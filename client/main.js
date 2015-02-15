@@ -4,23 +4,50 @@
 
 $(document).ready(init);
 
-var TIMER = 60;
-var NUMROWS = 4;
-var NUMCOLS = 5;
+var TIMER = 3;
+var NUMROWS;
+var NUMCOLS;
 var NUMTILES = NUMROWS * NUMCOLS;
 
+var intervalID = 0;
 var tiles = [];
 var $picked = [];
 var flipped = [];
 
-var counter;
-
 function init() {
-  createTiles();
-  drawTiles();
-  $('#start').on('click', startTimer);
+  $('#start').on('click', startGame);
   $(document).on('click', '.flipper', clickTile);
+}
 
+function startGame() {
+  if (!intervalID) {
+    selectTime();
+    selectSize();
+    createTiles();
+    drawTiles();
+    startTimer();
+  }
+}
+
+function selectTime() {
+  switch ($('#timeselect').val()) {
+    case '15 secs.': TIMER = 15; break;
+    case '30 secs.': TIMER = 30; break;
+    case '45 secs.': TIMER = 45; break;
+    case '60 secs.': TIMER = 60; break;
+    case '75 secs.': TIMER = 75; break;
+  }
+}
+
+function selectSize() {
+  switch ($('#sizeselect').val()) {
+    case '2x4': NUMROWS = 2; NUMCOLS = 4; break;
+    case '3x4': NUMROWS = 3; NUMCOLS = 4; break;
+    case '4x4': NUMROWS = 4; NUMCOLS = 4; break;
+    case '4x5': NUMROWS = 4; NUMCOLS = 5; break;
+    case '4x6': NUMROWS = 4; NUMCOLS = 6; break;
+  }
+  NUMTILES = NUMROWS * NUMCOLS;
 }
 
 function clickTile() {
@@ -53,24 +80,23 @@ function clickTile() {
 
 function checkWin() {
   if (flipped.length === NUMTILES) {
-    alert('You WIN!');
+    alert('Great!  You won in ' + (TIMER - $('#timer').text()) + ' seconds!');
   }
 }
 
 function startTimer() {
-  if ($('#timer').text() === '0') {
-    counter = TIMER;
-    $('#timer').text(counter);
-    setInterval(function() {
-      counter--;
-      if (counter >= 0) {
-        $('#timer').text(counter);
-      }
-      if (counter === 0) {
-        alert('You LOSE!');
-      }
-    }, 1000);
-  }
+  var clock;
+  clock = TIMER;
+  $('#timer').text(clock);
+  intervalID = setInterval(function() {
+    clock--;
+    if (clock >= 0) {
+      $('#timer').text(clock);
+    }
+    if (clock === 0) {
+      alert('You LOSE!');
+    }
+  }, 1000);
 }
 
 function createTiles() {

@@ -10,6 +10,22 @@ html(lang='en')
       .row
         .title
           h1 MemoryJS
+          label Choose game size:
+            select#sizeselect
+              option 2x4
+              option 3x4
+              option 4x4
+              option 4x5
+              option 4x6
+        .title
+          label Choose time limit:
+            select#timeselect
+              option 15 secs.
+              option 30 secs.
+              option 45 secs.
+              option 60 secs.
+              option 75 secs.
+        .title
           button#start Start Timer
         .title
           span#timer 0
